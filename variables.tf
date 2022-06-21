@@ -56,7 +56,7 @@ variable "primary_node_pool_node_version" {
 variable "primary_node_pool_machine_type" {
   type = string
   description = "Machine type for primary node-pool nodes"
-  default = "e2-medium"
+  default = "e2-standard-2"
 }
 
 variable "primary_node_pool_service_account" {
