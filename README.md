@@ -5,10 +5,8 @@ This deployment has two resources:
 2. Nodepool
 
 ## Dependencies
-1. GCP 
-2. Docker
-3. kubectl
-4. Terraform
+1. GCP Project
+2. Terraform
 
 ## How to setup
 
