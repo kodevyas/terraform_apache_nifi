@@ -1,0 +1,43 @@
+version: 2.1
+jobs:
+  deploy:
+    docker:
+      - image: hashicorp/terraform:latest
+
+    working_directory: ~/my-terraform-project
+
+    steps:
+      - checkout
+
+      # Set up Google Cloud credentials
+      - run:
+          name: Set up Google Cloud credentials
+          command: |
+            echo $GOOGLE_CREDENTIALS_JSON > ~/gcloud_key.json
+            gcloud auth activate-service-account --key-file=~/gcloud_key.json
+            gcloud config set project $GOOGLE_PROJECT_ID
+            gcloud container clusters get-credentials $GOOGLE_CLUSTER_NAME --region $GOOGLE_CLUSTER_REGION
+
+      # Install dependencies
+      - run:
+          name: Install dependencies
+          command: |
+            apk update && apk add make
+
+      # Initialize Terraform
+      - run:
+          name: Initialize Terraform
+          command: |
+            terraform init
+
+      # Plan and apply Terraform changes
+      - run:
+          name: Terraform plan
+          command: |
+            terraform plan -out=tfplan
+
+      - run:
+          name: Terraform apply
+          command: |
+            terraform apply -auto-approve tfplan
+
