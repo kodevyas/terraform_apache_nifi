@@ -1,3 +1,5 @@
+/.gitignore
+/.git 
 /.terraform.lock.hcl
 /.terraform
 /values.tfvars
